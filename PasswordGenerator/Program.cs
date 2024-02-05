@@ -9,6 +9,7 @@ namespace PasswordGenerator
         private const string capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const string numbers = "0123456789";
         private const string specialChars = "!@#$%^&*()_-+=<>?/";
+        private const int passwordMinLength = 4;
 
         private static void Main(string[] args)
         {
@@ -17,10 +18,9 @@ namespace PasswordGenerator
             var includeCapitalLetters = GetUserChoice("¿Incluir Mayúsculas? (Y/n): ");
             var includeNumbers = GetUserChoice("¿Incluir números? (Y/n): ");
             var includeSpecialChars = GetUserChoice("¿Incluir caracteres especiales? (Y/n): ");
-            var passLength = RequestPasswordLength();
 
-            var charSet = BuildPasswordCharSet(includeCapitalLetters, includeNumbers, includeSpecialChars);
-            var generatedPassword = GeneratePassword(passLength, charSet);
+            var generatedPassword = GeneratePassword(RequestPasswordLength(), BuildPasswordCharSet(includeCapitalLetters, includeNumbers, includeSpecialChars));
+
             Console.WriteLine("Password: ");
             Console.WriteLine(generatedPassword);
 
@@ -36,7 +36,6 @@ namespace PasswordGenerator
 
         private static int RequestPasswordLength() 
         {
-            const int passwordMinLength = 4;
             Console.WriteLine($"Ingresa la longitud de la contraseña (mínimo {passwordMinLength}): ");
             var input = Console.ReadLine();
             int.TryParse(input, out int passLength);
